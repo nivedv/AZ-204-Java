@@ -247,9 +247,8 @@ public class KeyVaultOperations {
         
         try {
             // Create an RSA key with 2048 bits
-            CreateRsaKeyOptions options = new CreateRsaKeyOptions()
-                .setKeySize(2048)
-                .setName(keyName);
+            CreateRsaKeyOptions options = new CreateRsaKeyOptions(keyName)
+                .setKeySize(2048);
                 
             KeyVaultKey key = keyClient.createRsaKey(options);
             
@@ -467,12 +466,12 @@ public class KeyVaultOperations {
         // Update the key properties
         key.getProperties().setExpiresOn(null); // Remove expiration if set
         KeyVaultKey updatedKey = keyClient.updateKeyProperties(
-            key.getProperties().setEnabled(true).setKeyOperations(keyOperations)
+            key.getProperties().setEnabled(true);
         );
         
         System.out.println("Key updated with name: " + updatedKey.getName());
         System.out.println("Key enabled: " + updatedKey.getProperties().isEnabled());
-        System.out.println("Key operations: " + updatedKey.getProperties().getKeyOperations());
+        System.out.println("Key operations: " + updatedKey.getKeyOperations());
     }
     
     private static void listKeys() {
